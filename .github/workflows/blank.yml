@@ -6,7 +6,7 @@ on:
         type: string
         description: "Configuration file"
         required: true
-        default: manifest_crom_n3
+        default: manifest_aosp
       BUILD_TIME:
         type: string
         description: "Custom build time (Enter F to use current time)"
@@ -16,7 +16,7 @@ on:
         type: string
         description: "Custom kernel suffix (leave empty for a random string)"
         required: false
-        default: "LuffyOP⚡"
+        default: "DareDevil⚡"
       SUSFS_CI:
         type: choice
         description: "SUSFS module download method"
@@ -30,7 +30,7 @@ on:
         type: string
         description: "Branch name/Custom version identifier"
         required: false
-        default: "susfs-main/LuffyOP⚡"
+        default: "susfs-main/DareDevil⚡"
       FAST_BUILD:
         type: boolean
         description: "Enable fast build?"
@@ -144,8 +144,8 @@ jobs:
 
       - name: Configure Git
         run: |
-          git config --global user.name "Luffy-456"
-          git config --global user.email "anshuman567.in@gmail.com"
+          git config --global user.name "hemasai1109"
+          git config --global user.email "pandunelluri.1109@gmail.com"
 
 
       - name: Configure APTC
@@ -230,7 +230,7 @@ jobs:
       - name: Initialize Repo and Sync
         run: |
           mkdir kernel_workspace && cd kernel_workspace
-          repo init -u https://github.com/Luffy-456/SukiSU_Kernel_Nord3.git -m ${{ github.event.inputs.FILE }}.xml --depth=1
+          repo init -u https://github.com/hemasai1109/Custom_kernel_OnePlus_Nord3.git -m ${{ github.event.inputs.FILE }}.xml --depth=1
           repo sync -c -j$(nproc --all) --no-tags --no-clone-bundle --force-sync
 
       - name: Add in bash.rc
