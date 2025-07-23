@@ -68,7 +68,7 @@ jobs:
           
           # Define valid combinations with base model only (no _v/_t/_u...)
           declare -A VALID_COMBINATIONS=(
-            ["manifest_crom_n3"]="mt6983 android12 5.10"
+            ["manifest_aosp"]="mt6983 android12 5.10"
           )
 
           # Recursively strip "_[a-z]+" suffixes to match base key
