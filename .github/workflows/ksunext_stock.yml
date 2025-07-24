@@ -25,7 +25,7 @@ on:
       android_version:
         required: true
         type: string
-        default: 12
+        default: android12
       kernel_version:
         required: true
         type: string
