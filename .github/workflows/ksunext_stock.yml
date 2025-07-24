@@ -148,25 +148,25 @@ jobs:
       - name: Check Disk Space
         run: df -h
 
-      - name: Clone AnyKernel3 and Other Dependencies
-        run: |
-          echo "Cloning AnyKernel3 and other dependencies..."
+      # - name: Clone AnyKernel3 and Other Dependencies
+      #   run: |
+      #     echo "Cloning AnyKernel3 and other dependencies..."
           
-          ANYKERNEL_BRANCH="gki-2.0"
-          if [[ -z "${{ inputs.susfs_branch }}" ]]; then
-            SUSFS_BRANCH="gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}"
-          else
-            SUSFS_BRANCH="${{ inputs.susfs_branch }}"
-          fi
+      #     ANYKERNEL_BRANCH="gki-2.0"
+      #     if [[ -z "${{ inputs.susfs_branch }}" ]]; then
+      #       SUSFS_BRANCH="gki-${{ inputs.android_version }}-${{ inputs.kernel_version }}"
+      #     else
+      #       SUSFS_BRANCH="${{ inputs.susfs_branch }}"
+      #     fi
           
-          # Debug print the branches
-          echo "Using branch for AnyKernel3: $ANYKERNEL_BRANCH"
-          echo "Using branch for SUSFS: $SUSFS_BRANCH"
+      #     # Debug print the branches
+      #     echo "Using branch for AnyKernel3: $ANYKERNEL_BRANCH"
+      #     echo "Using branch for SUSFS: $SUSFS_BRANCH"
           
-          # Clone repositories using the branch names
-          git clone https://github.com/TheWildJames/AnyKernel3.git -b "$ANYKERNEL_BRANCH"
-          git clone https://gitlab.com/simonpunk/susfs4ksu.git -b "$SUSFS_BRANCH"
-          git clone https://github.com/TheWildJames/kernel_patches.git
+      #     # Clone repositories using the branch names
+      #     git clone https://github.com/TheWildJames/AnyKernel3.git -b "$ANYKERNEL_BRANCH"
+      #     git clone https://gitlab.com/simonpunk/susfs4ksu.git -b "$SUSFS_BRANCH"
+      #     git clone https://github.com/TheWildJames/kernel_patches.git
 
       - name: Maximize Build Space
         uses: easimon/maximize-build-space@master
