@@ -479,16 +479,16 @@ jobs:
 
       - name: Add KernelSU Next
         run: |
-          echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel_platform"
-          
           echo "Adding KernelSU Next..."
-          
+            
+            # The KernelSU setup script is now run directly from the root of the kernel source.
+            # The unnecessary 'cd' command has been removed.
+            
           if [ "${{ inputs.ksun_branch }}" == "stable" ]; then
             curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -
           else
             curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s ${{ inputs.ksun_branch }}
-          fi
+            fi
 
       - name: Apply SUSFS Patches
         run: |
