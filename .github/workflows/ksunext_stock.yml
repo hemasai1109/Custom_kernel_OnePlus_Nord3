@@ -9,12 +9,15 @@ on:
       model:
         required: true
         type: string
+        default: oplus6983
       soc:
         required: true
         type: string
+        default: mt6983
       branch:
         required: true
         type: string
+        default: mt6983_v_15.0.0_nord_3
       manifest:
         required: true
         type: string
@@ -22,9 +25,11 @@ on:
       android_version:
         required: true
         type: string
+        default: 12
       kernel_version:
         required: true
         type: string
+        default: 5.10
       ksun_branch:
         required: true
         type: string
