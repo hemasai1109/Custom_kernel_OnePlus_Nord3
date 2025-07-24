@@ -111,7 +111,8 @@ jobs:
           
           # Initialize and sync kernel source
           echo "Initializing and syncing kernel source..."
-          $REPO init -u https://github.com/OnePlusOSS/kernel_manifest.git -b ${{ inputs.branch }} -m ${{ inputs.manifest }} --repo-rev=v2.16 --depth=1 --no-clone-bundle --no-tags
+          repo init -u https://github.com/hemasai1109/Custom_kernel_OnePlus_Nord3.git -m ${{ github.event.inputs.FILE }}.xml --depth=1
+          repo sync -c -j$(nproc --all) --no-tags --no-clone-bundle --force-sync
           
           # Sync repo and apply patches
           $REPO --version
