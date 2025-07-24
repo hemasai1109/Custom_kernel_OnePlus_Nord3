@@ -18,6 +18,7 @@ on:
       manifest:
         required: true
         type: string
+        default:manifest_stock
       android_version:
         required: true
         type: string
