@@ -296,7 +296,7 @@ jobs:
             shell: bash
             run: |
               echo "Changing to configuration directory: $CONFIG..."
-              cd "$CONFIG/kernel_platform"
+              cd "$CONFIG/kernel-5.10"
               
               echo "Adding configuration settings to gki_defconfig..."
               echo "CONFIG_TCP_CONG_ADVANCED=y" >> ./arch/arm64/configs/gki_defconfig
@@ -312,7 +312,7 @@ jobs:
             shell: bash
             run: |
               echo "Changing to configuration directory: $CONFIG..."
-              cd "$CONFIG/kernel_platform"
+              cd "$CONFIG/kernel-5.10"
               
               echo "Adding configuration settings to gki_defconfig..."
               echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./arch/arm64/configs/gki_defconfig
@@ -323,7 +323,7 @@ jobs:
             shell: bash
             run: |
               echo "Changing to configuration directory: $CONFIG..."
-              cd "$CONFIG/kernel_platform"
+              cd "$CONFIG/kernel-5.10"
               
               echo "Running sed commands..."
               
@@ -368,8 +368,8 @@ jobs:
               # Clear Cache
               sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'
               
-              rm ./kernel_platform/android/abi_gki_protected_exports_* || echo "No protected exports!"
-              rm ./kernel_platform/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
+              rm ./kernel-5.10/android/abi_gki_protected_exports_* || echo "No protected exports!"
+              rm ./kernel-5.10/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
               
               BUILD_TYPE="gki"
               BAZEL_ARGS=(--jobs=$(nproc --all) --lto=thin)
@@ -393,11 +393,11 @@ jobs:
               MONITOR_PID=$!
               trap "kill $MONITOR_PID" EXIT
               
-              if [ -f ./kernel_platform/build_with_bazel.py ]; then
-                ./kernel_platform/oplus/bazel/oplus_modules_variant.sh ${{ inputs.soc }} "$BUILD_TYPE" ""
-                ./kernel_platform/build_with_bazel.py -t ${{ inputs.soc }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
+              if [ -f ./kernel-5.10/build_with_bazel.py ]; then
+                ./kernel-5.10/oplus/bazel/oplus_modules_variant.sh ${{ inputs.soc }} "$BUILD_TYPE" ""
+                ./kernel-5.10/build_with_bazel.py -t ${{ inputs.soc }} $BUILD_TYPE "${BAZEL_ARGS[@]}" -o "$(pwd)/out"
               else
-                LTO=thin ./kernel_platform/oplus/build/oplus_build_kernel.sh ${{ inputs.soc }} "$BUILD_TYPE"
+                LTO=thin ./kernel-5.10/oplus/build/oplus_build_kernel.sh ${{ inputs.soc }} "$BUILD_TYPE"
               fi
     
           - name: Create ZIP Files for Different Formats
