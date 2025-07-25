@@ -333,7 +333,7 @@ jobs:
               
               # Run sed commands for modifications
               sed -i 's/check_defconfig//' ./build.config.gki
-              tac ./common/scripts/setlocalversion | sed '0,/echo "\$res"/s//res=\$\(echo \$res \| cut -d- -f1-2\)-OP-Wild\;echo "\$res"\;/' | tac > ./common/scripts/setlocalversion.tmp && mv ./common/scripts/setlocalversion.tmp ./common/scripts/setlocalversion
+              tac ./scripts/setlocalversion | sed '0,/echo "\$res"/s//res=\$\(echo \$res \| cut -d- -f1-2\)-OP-Wild\;echo "\$res"\;/' | tac > ./scripts/setlocalversion.tmp && mv ./scripts/setlocalversion.tmp ./scripts/setlocalversion
 
 
               # For New setlocalversion Script
