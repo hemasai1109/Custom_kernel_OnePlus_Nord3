@@ -116,10 +116,10 @@ jobs:
       - name: Add KernelSU
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel_platform"
+          cd "$CONFIG/kernel-5.10"
           
           echo "Adding KernelSU..."
-          curl -LSs "https://raw.githubusercontent.com/KernelSU-Next/KernelSU-Next/next/kernel/setup.sh" | bash -s next
+          curl -LSs "https://raw.githubusercontent.com/hemasai1109/Custom_kernel_OnePlus_Nord3/refs/heads/main/.github/workflows/ksun.sh" | bash -s next
           
           git submodule update --init --recursive
           cd KernelSU-Next/kernel
