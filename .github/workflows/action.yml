@@ -140,7 +140,7 @@ jobs:
 
           - name: Copy and Rename Build Configuration
             run: |
-              git clone https://github.com/hemasai1109/Custom_kernel_OnePlus_Nord3.git $CONFIG
+              # git clone https://github.com/hemasai1109/Custom_kernel_OnePlus_Nord3.git $CONFIG
               cp -v $CONFIG/build.config.oplus6983-d $CONFIG/kernel-5.10/
               echo "pwd cmd!!!!!!!!!!!"
               pwd
