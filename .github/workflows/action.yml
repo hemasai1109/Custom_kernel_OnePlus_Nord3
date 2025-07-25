@@ -37,7 +37,7 @@ on:
       susfs_branch:
         required: true
         type: string
-        default: ""
+        default: main
 jobs:
   build-kernel-oneplus-kernelsu-susfs:
     runs-on: ubuntu-latest
