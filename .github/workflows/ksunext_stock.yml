@@ -122,7 +122,7 @@ jobs:
       - name: Add KernelSU
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel-5.10"
+          cd "$CONFIG/kernel_workspace"
           
           echo "Adding KernelSU..."
           curl -LSs "https://raw.githubusercontent.com/hemasai1109/Custom_kernel_OnePlus_Nord3/refs/heads/main/.github/workflows/ksun.sh" | bash -s next
@@ -136,7 +136,7 @@ jobs:
       - name: Apply SUSFS Patches
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel-5.10"
+          cd "$CONFIG/kernel_workspace"
           ls
           echo "Applying SUSFS patches..."
           
@@ -152,7 +152,7 @@ jobs:
           patch -p1 --forward < 0001-kernel-patch-susfs-v1.5.5-to-KernelSU-Next-v1.0.5.patch || true
           
           # Change to common directory and apply SUSFS patch
-          cd ../common
+          cd ../kernel-5.10
           if [ "${{ inputs.soc }}" == "sun" ]; then
             sed -i '/#include <trace\/hooks\/blk.h>/a #include <trace/hooks/fs.h>' ./fs/namespace.c
           fi
