@@ -9,21 +9,27 @@ on:
       model:
         required: true
         type: string
+        default: CPH2491
       soc:
         required: true
         type: string
+        default: mt6983
       branch:
         required: true
         type: string
+        default: main
       manifest:
         required: true
         type: string
+        default: manifest_stock.xml
       android_version:
         required: true
         type: string
+        default: android12
       kernel_version:
         required: true
         type: string
+        default: 5.10
   
 jobs:
   build-kernel-oneplus-kernelsu-susfs:
