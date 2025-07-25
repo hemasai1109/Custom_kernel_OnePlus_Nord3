@@ -136,7 +136,39 @@ jobs:
               # Sync repo and apply patches
               $REPO --version
               $REPO --trace sync -c --no-clone-bundle --no-tags --optimized-fetch -j$(nproc --all) --fail-fast
-          
+
+
+          - name: Copy and Rename Build Configuration
+            run: |
+              git clone https://github.com/hemasai1109/Custom_kernel_OnePlus_Nord3.git $CONFIG
+              cp -v $CONFIG/build.config.oplus6983-d $CONFIG/kernel-5.10/
+              echo "pwd cmd!!!!!!!!!!!"
+              pwd
+              echo "cd kernel_workspace/kernel-5.10 cmd!!!!!!!!!!"
+              cd $CONFIG/kernel-5.10
+              echo "ls before rename !!!!!!!!!"
+              ls
+              
+              # --- ADDED STEPS START HERE ---
+              
+              echo "Renaming the build config file"
+              mv build.config.oplus6983-d build.config.oplus6983
+              
+              echo "Validate the renamed file"
+              ls -ls build.config.oplus6983
+              
+              # --- ADDED STEPS END HERE ---
+              
+              echo "ls after rename !!!!!!!!!"
+              ls
+              echo "pwd cmd!!!!!!!!!!!"
+              pwd
+
+
+          - name: Add in bash.rc
+            run: |
+              echo "BUILD_CONFIG=kernel-5.10/build.config.oplus6983" >> $GITHUB_ENV
+        
           - name: Add KernelSU Next
             shell: bash
             run: |
