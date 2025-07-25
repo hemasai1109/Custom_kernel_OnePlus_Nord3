@@ -323,7 +323,7 @@ jobs:
             shell: bash
             run: |
               echo "Changing to configuration directory: $CONFIG..."
-              cd "$CONFIG/kernel-5.10"
+              cd "$CONFIG"
               
               echo "Running sed commands..."
               
