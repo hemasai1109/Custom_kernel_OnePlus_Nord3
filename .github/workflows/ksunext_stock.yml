@@ -148,6 +148,9 @@ jobs:
           cd ./KernelSU-Next
           
           echo "Applying next SUSFS patches..."
+          cd ../../../
+          cd kernel_patches
+          cd next
           cp ../../../kernel_patches/next/0001-kernel-patch-susfs-v1.5.9-to-KernelSU-Next-v1.0.9.patch ./
           patch -p1 --forward < 0001-kernel-patch-susfs-v1.5.5-to-KernelSU-Next-v1.0.5.patch || true
           
