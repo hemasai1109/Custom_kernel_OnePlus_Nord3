@@ -325,9 +325,9 @@ jobs:
               cd "$CONFIG/kernel_platform"
               
               echo "Adding configuration settings to gki_defconfig..."
-              echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./common/arch/arm64/configs/gki_defconfig
-              echo "CONFIG_IP6_NF_TARGET_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
-              echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
+              echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./arch/arm64/configs/gki_defconfig
+              echo "CONFIG_IP6_NF_TARGET_HL=y" >> ./arch/arm64/configs/gki_defconfig
+              echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./arch/arm64/configs/gki_defconfig
     
           - name: Run sed and perl Commands
             shell: bash
@@ -355,7 +355,7 @@ jobs:
               chmod +x ./msm-kernel/scripts/setlocalversion
               chmod +x ./external/dtc/scripts/setlocalversion
               sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" ./build/kernel/kleaf/impl/stamp.bzl || echo "No stamp.bzl!"
-              sed -i 's/-dirty//' ./common/scripts/setlocalversion
+              sed -i 's/-dirty//' ./scripts/setlocalversion
               sed -i 's/-dirty//' ./msm-kernel/scripts/setlocalversion
               sed -i 's/-dirty//' ./external/dtc/scripts/setlocalversion
               sed -i 's/-dirty//' ./build/kernel/kleaf/workspace_status_stamp.py || echo "No workspace_status_stamp.py!"
