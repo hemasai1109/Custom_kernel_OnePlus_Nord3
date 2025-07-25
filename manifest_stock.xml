@@ -1,30 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <manifest>
-  <remote fetch="https://android.googlesource.com" name="aosp"/>
-  <remote fetch="https://github.com/OnePlusOSS" name="github"/>
+  <remote  name="aosp" 
+           fetch="https://android.googlesource.com" />
+  <remote  name="github"
+    	   fetch="https://github.com/OnePlusOSS" />
 
-  <default remote="aosp" revision="master-kernel-build-2021" sync-j="4"/>
-  
-  <superproject name="kernel/superproject" remote="aosp" revision="common-android12-5.10"/>
+  <default revision="master-kernel-build-2021" remote="aosp" sync-j="4" />
 
-  <!-- Core build projects -->
-  <project path="build" name="kernel/build"/>
-  <project path="kernel/tests" name="kernel/tests"/>
-  <project path="kernel/configs" name="kernel/configs"/>
+  <superproject name="kernel/superproject" remote="aosp" revision="common-android12-5.10" />
 
-  <!-- Prebuilts -->
-  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1"/>
-  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1"/>
+  <project path="build" name="kernel/build" />
+  <project path="kernel/tests" name="kernel/tests" />
+  <project path="kernel/configs" name="kernel/configs" />
+  <project path="prebuilts/build-tools" name="platform/prebuilts/build-tools" clone-depth="1" />
+  <project path="prebuilts/kernel-build-tools" name="kernel/prebuilts/build-tools" clone-depth="1" />
+  <project path="prebuilts-master/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1" remote="aosp" />
+  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" clone-depth="1" remote="aosp" />
 
-  <project path="prebuilts-master/clang/host/linux-x86" name="platform/prebuilts/clang/host/linux-x86" clone-depth="1"/>
-  <project path="prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" name="platform/prebuilts/gcc/linux-x86/host/x86_64-linux-glibc2.17-4.8" clone-depth="1"/>
+  <project path="kernel-5.10" name="android_kernel_5.10_oneplus_mt6983" remote="github" revision="oneplus/mt6983_v_15.0.0_nord_3" clone-depth="1" />
 
-  <!-- Kernel source for Nord 3 -->
-  <project remote="github" name="android_kernel_5.10_oneplus_mt6983" path="kernel_platform/msm-kernel" revision="oneplus/mt6983_v_15.0.0_nord_3" clone-depth="1">
-    <linkfile dest="kernel_platform/WORKSPACE" src="bazel.WORKSPACE"/>
-    <linkfile dest="kernel_platform/build_with_bazel.py" src="build_with_bazel.py"/>
-  </project>
+  <project path="kernel_module" name="android_kernel_modules_oneplus_mt6983" remote="github" revision="oneplus/mt6983_v_15.0.0_nord_3" />
 
-  <!-- Kernel modules for Nord 3 -->
-  <project remote="github" name="android_kernel_modules_oneplus_mt6983" path="kernel_platform/modules" revision="oneplus/mt6983_v_15.0.0_nord_3"/>
 </manifest>
