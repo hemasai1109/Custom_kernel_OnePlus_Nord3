@@ -333,17 +333,15 @@ jobs:
               
               # Run sed commands for modifications
               sed -i 's/check_defconfig//' ./build.config.gki
-              # For Old setlocalversion Script
-              tac ./scripts/setlocalversion | sed '0,/echo "\$res"/s//res=\$\(echo \$res \| cut -d- -f1-2\)-OP-Wild\;echo "\$res"\;/' | tac > ./scripts/setlocalversion.tmp && mv ./scripts/setlocalversion.tmp ./scripts/setlocalversion
-              tac ./external/dtc/scripts/setlocalversion | sed '0,/echo "\$res"/s//res=\$\(echo \$res \| cut -d- -f1-2\)-OP-Wild\;echo "\$res"\;/' | tac > ./external/dtc/scripts/setlocalversion.tmp && mv ./external/dtc/scripts/setlocalversion.tmp ./external/dtc/scripts/setlocalversion
+             
               # For New setlocalversion Script
               sed -i 's/echo "${KERNELVERSION}${file_localversion}${config_localversion}${LOCALVERSION}${scm_version}"/echo "${KERNELVERSION}-${{ inputs.android_version }}-OP-Wild"/' ./scripts/setlocalversion
-              sed -i 's/echo "${KERNELVERSION}${file_localversion}${config_localversion}${LOCALVERSION}${scm_version}"/echo "${KERNELVERSION}-${{ inputs.android_version }}-OP-Wild"/' ./external/dtc/scripts/setlocalversion
+              # sed -i 's/echo "${KERNELVERSION}${file_localversion}${config_localversion}${LOCALVERSION}${scm_version}"/echo "${KERNELVERSION}-${{ inputs.android_version }}-OP-Wild"/' ./external/dtc/scripts/setlocalversion
               chmod +x ./scripts/setlocalversion
-              chmod +x ./external/dtc/scripts/setlocalversion
+              # chmod +x ./external/dtc/scripts/setlocalversion
               sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" ./build/kernel/kleaf/impl/stamp.bzl || echo "No stamp.bzl!"
               sed -i 's/-dirty//' ./scripts/setlocalversion
-              sed -i 's/-dirty//' ./external/dtc/scripts/setlocalversion
+              # sed -i 's/-dirty//' ./external/dtc/scripts/setlocalversion
               sed -i 's/-dirty//' ./build/kernel/kleaf/workspace_status_stamp.py || echo "No workspace_status_stamp.py!"
               
               sed -i '/echo "LTO $LTO "/i export LTO=thin' ./oplus/build/oplus_setup.sh
