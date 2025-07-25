@@ -122,7 +122,7 @@ jobs:
       - name: Add KernelSU
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel_workspace"
+          cd "$CONFIG/kernel-5.10"
           
           echo "Adding KernelSU..."
           curl -LSs "https://raw.githubusercontent.com/hemasai1109/Custom_kernel_OnePlus_Nord3/refs/heads/main/.github/workflows/ksun.sh" | bash -s next
@@ -136,7 +136,7 @@ jobs:
       - name: Apply SUSFS Patches
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel_workspace"
+          cd "$CONFIG/kernel-5.10"
           ls
           echo "Applying SUSFS patches..."
           
