@@ -37,7 +37,7 @@ on:
       susfs_branch:
         required: true
         type: string
-        default: main
+        default: gki-android12-5.10
 jobs:
   build-kernel-oneplus-kernelsu-susfs:
     runs-on: ubuntu-latest
