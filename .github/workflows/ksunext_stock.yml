@@ -120,9 +120,9 @@ jobs:
           repo init -u https://github.com/hemasai1109/Custom_kernel_OnePlus_Nord3.git -m ${{ github.event.inputs.FILE }}.xml --depth=1
           # repo sync -c -j$(nproc --all) --no-tags --no-clone-bundle --force-sync
           
-          # Sync repo and apply patches
-          $REPO --version
-          $REPO --trace sync -c --no-clone-bundle --no-tags --optimized-fetch -j$(nproc --all) --fail-fast
+          # # Sync repo and apply patches
+          # $REPO --version
+          # $REPO --trace sync -c --no-clone-bundle --no-tags --optimized-fetch -j$(nproc --all) --fail-fast
       
       - name: Add KernelSU Next
         run: |
