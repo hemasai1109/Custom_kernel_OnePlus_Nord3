@@ -148,12 +148,9 @@ jobs:
           cd ./KernelSU-Next
           
           echo "Applying next SUSFS patches..."
-          cd ../../../
-          cd kernel_patches
-          cd next
-          ls
-          cp ../../../kernel_patches/next/0001-kernel-patch-susfs-v1.5.9-to-KernelSU-Next-v1.0.9.patch ./
-          patch -p1 --forward < 0001-kernel-patch-susfs-v1.5.5-to-KernelSU-Next-v1.0.5.patch || true
+
+          cp ../../../kernel_patches/next/0001-kernel-implement-susfs-v1.5.8-KernelSU-Next-v1.0.8.patch ./
+          patch -p1 --forward < 0001-kernel-implement-susfs-v1.5.8-KernelSU-Next-v1.0.8.patch || true
           
           # Change to common directory and apply SUSFS patch
           cd ../
@@ -165,7 +162,7 @@ jobs:
       - name: Apply KSU Hooks
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel-5.10/common"
+          cd "$CONFIG/kernel-5.10/"
           # Apply additional patch
           cp ../../../kernel_patches/next/syscall_hooks.patch ./
           patch -p1 --fuzz=3 < ./syscall_hooks.patch
@@ -173,7 +170,7 @@ jobs:
       - name: Apply Hide Stuff Patches
         run: |
           echo "Changing to configuration directory: $CONFIG..."
-          cd "$CONFIG/kernel-5.10/common"
+          cd "$CONFIG/kernel-5.10/"
           # Apply additional patch
           cp ../../../kernel_patches/69_hide_stuff.patch ./
           patch -p1 -F 3 < 69_hide_stuff.patch
@@ -186,100 +183,100 @@ jobs:
           echo "Adding configuration settings to gki_defconfig..."
           
           # Add KSU configuration settings
-          echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_WITH_KPROBES=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_WITH_KPROBES=n" >> ./arch/arm64/configs/gki_defconfig
           
           # Add SUSFS configuration settings
-          echo "CONFIG_KSU_SUSFS=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SUS_MOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SUS_KSTAT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SUS_OVERLAYFS=n" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_TRY_UMOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SPOOF_UNAME=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_HAS_MAGIC_MOUNT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_PATH=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_MOUNT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_KSU_DEFAULT_MOUNT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_SUS_BIND_MOUNT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_KSTAT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_OVERLAYFS=n" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_TRY_UMOUNT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_AUTO_ADD_TRY_UMOUNT_FOR_BIND_MOUNT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SPOOF_UNAME=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_ENABLE_LOG=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_HIDE_KSU_SUSFS_SYMBOLS=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SPOOF_CMDLINE_OR_BOOTCONFIG=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_OPEN_REDIRECT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_KSU_SUSFS_SUS_SU=n" >> ./arch/arm64/configs/gki_defconfig
           
           # Add additional tmpfs config setting
-          echo "CONFIG_TMPFS_XATTR=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TMPFS_POSIX_ACL=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TMPFS_XATTR=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TMPFS_POSIX_ACL=y" >> ./arch/arm64/configs/gki_defconfig
           
           # Add additional tmpfs config setting
-          echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_IP6_NF_TARGET_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP_NF_TARGET_TTL=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_TARGET_HL=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_IP6_NF_MATCH_HL=y" >> ./arch/arm64/configs/gki_defconfig
           
           # Add additional tcp_bbr config setting
           # Enable BBR
-          echo "CONFIG_TCP_CONG_ADVANCED=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_BBR=y" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_ADVANCED=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_BBR=y" >> ./arch/arm64/configs/gki_defconfig
           
           # Optional: Keep Reno/Cubic as alternatives
-          echo "CONFIG_TCP_CONG_CUBIC=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_RENO=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_TCP_CONG_CDG=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_DEFAULT_CUBIC=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo 'CONFIG_DEFAULT_TCP_CONG="cubic"' >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_CUBIC=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_RENO=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_TCP_CONG_CDG=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_DEFAULT_CUBIC=y" >> ./arch/arm64/configs/gki_defconfig
+          echo 'CONFIG_DEFAULT_TCP_CONG="cubic"' >> ./arch/arm64/configs/gki_defconfig
           
           # Disable Unnecessary TCP Congestion Algorithms
-          echo "# CONFIG_TCP_CONG_BIC is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_WESTWOOD is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_HTCP is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_HSTCP is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_HYBLA is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_VEGAS is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_NV is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_SCALABLE is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_LP is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_VENO is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_YEAH is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_ILLINOIS is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_TCP_CONG_DCTCP is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          # echo "# CONFIG_TCP_CONG_CDG is not set" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_BIC is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_WESTWOOD is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_HTCP is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_HSTCP is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_HYBLA is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_VEGAS is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_NV is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_SCALABLE is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_LP is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_VENO is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_YEAH is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_ILLINOIS is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_TCP_CONG_DCTCP is not set" >> ./arch/arm64/configs/gki_defconfig
+          # echo "# CONFIG_TCP_CONG_CDG is not set" >> ./arch/arm64/configs/gki_defconfig
           
           # Enable FQ-CoDel and FQ for Queue Management
-          echo "CONFIG_NET_SCH_FQ=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_NET_SCH_FQ_CODEL=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_NET_SCH_DEFAULT=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "CONFIG_DEFAULT_FQ=y" >> ./common/arch/arm64/configs/gki_defconfig
-          echo 'CONFIG_DEFAULT_NET_SCH="fq"' >> ./common/arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NET_SCH_FQ=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NET_SCH_FQ_CODEL=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_NET_SCH_DEFAULT=y" >> ./arch/arm64/configs/gki_defconfig
+          echo "CONFIG_DEFAULT_FQ=y" >> ./arch/arm64/configs/gki_defconfig
+          echo 'CONFIG_DEFAULT_NET_SCH="fq"' >> ./arch/arm64/configs/gki_defconfig
           
           # Disable Other Queuing Disciplines
-          echo "# CONFIG_NET_SCH_CBQ is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_HTB is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_HFSC is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_ATM is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_PRIO is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_MULTIQ is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_RED is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_SFB is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_SFQ is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_TEQL is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_TBF is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_CBS is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_ETF is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_TAPRIO is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_GRED is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_DSMARK is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_NETEM is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_DRR is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_MQPRIO is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_SKBPRIO is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_CHOKE is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_QFQ is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_CODEL is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_CAKE is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_HHF is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_PIE is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_FQ_PIE is not set" >> ./common/arch/arm64/configs/gki_defconfig
-          echo "# CONFIG_NET_SCH_INGRESS is not set" >> ./common/arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_CBQ is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_HTB is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_HFSC is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_ATM is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_PRIO is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_MULTIQ is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_RED is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_SFB is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_SFQ is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_TEQL is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_TBF is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_CBS is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_ETF is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_TAPRIO is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_GRED is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_DSMARK is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_NETEM is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_DRR is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_MQPRIO is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_SKBPRIO is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_CHOKE is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_QFQ is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_CODEL is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_CAKE is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_HHF is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_PIE is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_FQ_PIE is not set" >> ./arch/arm64/configs/gki_defconfig
+          echo "# CONFIG_NET_SCH_INGRESS is not set" >> ./arch/arm64/configs/gki_defconfig
 
       - name: Run sed and perl Commands
         run: |
@@ -288,17 +285,17 @@ jobs:
           
           echo "Running sed commands..."
           
-          sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "./common/arch/arm64/configs/gki_defconfig"
-          sed -i 's/CONFIG_LTO_CLANG_FULL=y/CONFIG_LTO_CLANG_THIN=y/' "./common/arch/arm64/configs/gki_defconfig"
-          sed -i 's/CONFIG_LTO_CLANG_NONE=y/CONFIG_LTO_CLANG_THIN=y/' "./common/arch/arm64/configs/gki_defconfig"
+          sed -i 's/CONFIG_LTO=n/CONFIG_LTO=y/' "./arch/arm64/configs/gki_defconfig"
+          sed -i 's/CONFIG_LTO_CLANG_FULL=y/CONFIG_LTO_CLANG_THIN=y/' "./arch/arm64/configs/gki_defconfig"
+          sed -i 's/CONFIG_LTO_CLANG_NONE=y/CONFIG_LTO_CLANG_THIN=y/' "./arch/arm64/configs/gki_defconfig"
           
           # Run sed commands for modifications
-          sed -i 's/check_defconfig//' ./common/build.config.gki
-          sed -i '$s|echo "\$res"|echo "\$res-fatalcoder524"|' ./common/scripts/setlocalversion
+          sed -i 's/check_defconfig//' ./build.config.gki
+          sed -i '$s|echo "\$res"|echo "\$res-fatalcoder524"|' ./scripts/setlocalversion
           sed -i '$s|echo "\$res"|echo "\$res-fatalcoder524"|' ./msm-kernel/scripts/setlocalversion
           sed -i '$s|echo "\$res"|echo "\$res-fatalcoder524"|' ./external/dtc/scripts/setlocalversion
           sed -i "/stable_scmversion_cmd/s/-maybe-dirty//g" ./build/kernel/kleaf/impl/stamp.bzl || echo "No stamp.bzl!"
-          sed -i 's/-dirty//' ./common/scripts/setlocalversion
+          sed -i 's/-dirty//' ./scripts/setlocalversion
           sed -i 's/-dirty//' ./msm-kernel/scripts/setlocalversion
           sed -i 's/-dirty//' ./external/dtc/scripts/setlocalversion
           sed -i 's/-dirty//' ./build/kernel/kleaf/workspace_status_stamp.py || echo "No workspace_status_stamp.py!"
@@ -308,7 +305,7 @@ jobs:
          
           # Run perl command to modify UTS_VERSION
           DATESTR=$(date -u)
-          perl -pi -e "s{UTS_VERSION=\"\\\$\\(echo \\\$UTS_VERSION \\\$CONFIG_FLAGS \\\$TIMESTAMP \\| cut -b -\\\$UTS_LEN\\)\"}{UTS_VERSION=\"#1 SMP PREEMPT $DATESTR\"}" ./common/scripts/mkcompile_h
+          perl -pi -e "s{UTS_VERSION=\"\\\$\\(echo \\\$UTS_VERSION \\\$CONFIG_FLAGS \\\$TIMESTAMP \\| cut -b -\\\$UTS_LEN\\)\"}{UTS_VERSION=\"#1 SMP PREEMPT $DATESTR\"}" ./scripts/mkcompile_h
           perl -pi -e "s{UTS_VERSION=\"\\\$\\(echo \\\$UTS_VERSION \\\$CONFIG_FLAGS \\\$TIMESTAMP \\| cut -b -\\\$UTS_LEN\\)\"}{UTS_VERSION=\"#1 SMP PREEMPT $DATESTR\"}" ./msm-kernel/scripts/mkcompile_h
           perl -pi -e "s{UTS_VERSION=\"\\\$\\(echo \\\$UTS_VERSION \\\$CONFIG_FLAGS \\\$TIMESTAMP \\| cut -b -\\\$UTS_LEN\\)\"}{UTS_VERSION=\"#1 SMP PREEMPT $DATESTR\"}" ./external/dtc/scripts/mkcompile_h
           
@@ -323,7 +320,7 @@ jobs:
           # Clear Cache
           sudo sh -c 'sync; echo 3 > /proc/sys/vm/drop_caches'
           
-          rm ./kernel-5.10/common/android/abi_gki_protected_exports_* || echo "No protected exports!"
+          rm ./kernel-5.10/android/abi_gki_protected_exports_* || echo "No protected exports!"
           rm ./kernel-5.10/msm-kernel/android/abi_gki_protected_exports_* || echo "No protected exports!"
           
           BUILD_TYPE="gki"
