@@ -238,17 +238,7 @@ jobs:
                 echo "Kernel >= $MIN_VERSION, skipping ptrace patch"
               fi
               
-              if [ "${{ inputs.model }}" == "OPAce5Pro" ] || [ "${{ inputs.model }}" == "OP13" ]; then
-                echo "Patching hmbird!"
-                echo 'obj-y += hmbird_patch.o' >> ./drivers/Makefile
-                patch -p1 -F 3 < "../../kernel_patches/oneplus/hmbird/hmbird_kernel_patch.patch"
-                echo "Patching hmbird files!"
-                cd ./kernel/sched
-                rm -rf ext.c ext.h build_policy.c slim.h slim_sysctl.c
-                patch -p1 -F 3 < "../../../../../kernel_patches/oneplus/hmbird/hmbird_files_patch.patch"
-              else
-                echo "Not OPAce5Pro / OP13 , skipping fengchi patch"
-              fi
+              
     
           - name: Apply KSUN Hooks
             shell: bash
@@ -256,7 +246,7 @@ jobs:
               echo "Changing to configuration directory: $CONFIG..."
               cd "$CONFIG/kernel-5.10"
               echo "Applying KSUN Hooks..."
-              cp ../../../kernel_patches/next/scope_min_manual_hooks_v1.4.patch ./manual_hooks.patch
+              cp ../../kernel_patches/next/scope_min_manual_hooks_v1.4.patch ./manual_hooks.patch
               patch -p1 < ./manual_hooks.patch
               
           - name: Apply Hide Stuff Patches
@@ -265,20 +255,20 @@ jobs:
               echo "Changing to configuration directory: $CONFIG..."
               cd "$CONFIG/kernel-5.10"
               # Apply additional patch
-              cp ../../../kernel_patches/69_hide_stuff.patch ./
+              cp ../../kernel_patches/69_hide_stuff.patch ./
               patch -p1 -F 3 < 69_hide_stuff.patch
     
           - name: Add KernelSU-Next and SUSFS Configuration Settings
             shell: bash
             run: |
               echo "Changing to configuration directory: $CONFIG..."
-              cd "$CONFIG/kernel_platform"
+              cd "$CONFIG/kernel-5.10"
               
               echo "Adding configuration settings to gki_defconfig..."
               
               # Add KSU configuration settings
-              echo "CONFIG_KSU=y" >> ./common/arch/arm64/configs/gki_defconfig
-              echo "CONFIG_KSU_KPROBES_HOOK=n" >> ./common/arch/arm64/configs/gki_defconfig
+              echo "CONFIG_KSU=y" >> ./arch/arm64/configs/gki_defconfig
+              echo "CONFIG_KSU_KPROBES_HOOK=n" >> ./arch/arm64/configs/gki_defconfig
               
               # Add SUSFS configuration settings
               echo "CONFIG_KSU_SUSFS=y" >> ./common/arch/arm64/configs/gki_defconfig
