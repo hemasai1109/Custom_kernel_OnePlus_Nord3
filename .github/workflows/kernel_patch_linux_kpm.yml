@@ -73,35 +73,35 @@ jobs:
           name: ${{ steps.find_artifact.outputs.artifact_name }}
           path: ./Anykernel3_STOCK_NORD3/*
 
-  notify_result:
-    name: Notify Patch Status
-    needs: release
-    if: always()
-    runs-on: ubuntu-latest
-    steps:
-      - name: Notify on Success
-        if: ${{ needs.release.result == 'success' }}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID_PERSONAL }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          format: markdown
-          message: |
-            *✅ Patching Successful*
-            ------------------------------------
-            The patched kernel artifact is ready. Starting the final `Create Kernel Release` workflow.
+  # notify_result:
+  #   name: Notify Patch Status
+  #   needs: release
+  #   if: always()
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Notify on Success
+  #       if: ${{ needs.release.result == 'success' }}
+  #       uses: appleboy/telegram-action@master
+  #       with:
+  #         to: ${{ secrets.TELEGRAM_CHAT_ID_PERSONAL }}
+  #         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  #         format: markdown
+  #         message: |
+  #           *✅ Patching Successful*
+  #           ------------------------------------
+  #           The patched kernel artifact is ready. Starting the final `Create Kernel Release` workflow.
 
-      - name: Notify on Failure, Cancellation, or Skip
-        # This condition now checks for all non-success outcomes
-        if: ${{ needs.release.result == 'failure' || needs.release.result == 'cancelled' || needs.release.result == 'skipped' }}
-        uses: appleboy/telegram-action@master
-        with:
-          to: ${{ secrets.TELEGRAM_CHAT_ID_PERSONAL }}
-          token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          format: markdown
-          message: |
-            *❌ Patching Workflow Did Not Complete*
-            ------------------------------------
-            The patching process was not successful (Status: ${{ needs.release.result }}).
-            The release process will not start.
-            [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
+  #     - name: Notify on Failure, Cancellation, or Skip
+  #       # This condition now checks for all non-success outcomes
+  #       if: ${{ needs.release.result == 'failure' || needs.release.result == 'cancelled' || needs.release.result == 'skipped' }}
+  #       uses: appleboy/telegram-action@master
+  #       with:
+  #         to: ${{ secrets.TELEGRAM_CHAT_ID_PERSONAL }}
+  #         token: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  #         format: markdown
+  #         message: |
+  #           *❌ Patching Workflow Did Not Complete*
+  #           ------------------------------------
+  #           The patching process was not successful (Status: ${{ needs.release.result }}).
+  #           The release process will not start.
+  #           [View Logs](https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }})
