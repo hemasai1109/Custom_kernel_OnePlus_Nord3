@@ -75,7 +75,7 @@ jobs:
           echo "🔧 Validating input combinations..."
           FILE="${{ github.event.inputs.FILE }}"
           declare -A VALID_COMBINATIONS=(
-            ["manifest_crom_n3"]="mt6983 android12 5.10"
+            ["manifest_aosp"]="mt6983 android12 5.10"
           )
           get_combination() {
             local key="$1"
