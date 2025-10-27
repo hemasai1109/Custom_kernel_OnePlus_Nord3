@@ -594,7 +594,7 @@ jobs:
       - name: Upload AnyKernel3_CROM
         uses: actions/upload-artifact@v4
         with:
-          name: "nebula Kernel For OnePlusNord 3_AOSP${{ steps.suffix.outputs.value }} by Daredevil⚡"
+          name: "Nebula_Kernel_SuKiSU_AOSP${{ steps.suffix.outputs.value }}_by_Daredevil⚡"
           path: ./Anykernel3_AOSP_NORD3/*
 
       - name: Post-build Disk Check
