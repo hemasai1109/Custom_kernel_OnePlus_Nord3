@@ -562,6 +562,10 @@ jobs:
               fi
             fi
           done
+      - name: Fix undeclared show_pad label
+        run: |
+          sed -i '/goto show_pad;/d' kernel_workspace/kernel-5.10/fs/proc/task_mmu.c
+
 
       - name: Build Kernel FAST
         if: ${{ github.event.inputs.FAST_BUILD == 'true' }}
