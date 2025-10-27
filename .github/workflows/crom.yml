@@ -579,23 +579,6 @@ jobs:
           ./build/build.sh
           ccache -s
 
-      - name: Apply patch_linux and replace Image
-        run: |
-          cd kernel_workspace/out/android12-5.10/kernel-5.10/arch/arm64/boot/
-          curl -LO --retry 5 --retry-delay 2 --retry-connrefused https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU_patch/main/kpm/patch_linux
-          chmod +x patch_linux
-          ls
-          gzip -d Image.gz
-          ls
-          ./patch_linux
-          ls
-          rm -f Image.gz
-          ls
-          mv oImage Image
-          ls
-          gzip -f -9 Image
-          ls
-          pwd
 
       - name: Make AnyKernel3_CROM
         run: |
