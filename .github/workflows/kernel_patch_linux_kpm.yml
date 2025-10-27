@@ -4,7 +4,7 @@ on:
   workflow_run:
     workflows:
       - "Build OnePlus Nord 3 Stock"
-      - "Build OnePlus Nord 3 Crom"
+      - "Build OnePlus Nord 3 AOSP"
     types:
       - completed
 
