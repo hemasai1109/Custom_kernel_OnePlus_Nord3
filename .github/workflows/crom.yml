@@ -295,7 +295,8 @@ jobs:
           ls
           echo "rm -rf kernel_module"
           rm -rf kernel_module
-       - name: Create thermal Makefile
+        
+      - name: Create thermal Makefile
         run: |
           echo "pwd"
           pwd
@@ -317,7 +318,7 @@ jobs:
           echo "ls"
           ls
           cat Makefile
-
+        
       - name: Create Makefile in fingerprint mtk
         run: |
           echo "pwd"
